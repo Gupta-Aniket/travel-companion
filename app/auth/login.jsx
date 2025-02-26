@@ -1,120 +1,128 @@
-import { StyleSheet, 
-          Text, 
-          View, 
-          SafeAreaView, 
-          Button, 
-          TextInput, 
-          TouchableOpacity,
-          KeyboardAvoidingView,
-          Platform} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native'
 import React, { useState } from 'react'
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import { Icon } from 'react-native-elements'
 import { Formik } from 'formik';
 import { useRouter } from 'expo-router';
 import * as Yup from 'yup';
-import  globalStyles  from '../constants/globalstyles.jsx';
+import globalStyles from '../constants/globalstyles.jsx';
 import InputField from '../components/InputField.jsx';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import   UIConstants  from '../constants/ui.jsx';
+import authService from '../services/authService.jsx';
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  
   const handleLogin = (values) => {
-    console.log("Submitted", values);
+    if(authService.checkUserExists(values.email)){
+      console.log(values);
+      // Send OTP
+      try{
+        authService.sendOtp(values.email);
+      }catch(error){
+        console.error("Error sending OTP:", error.message);
+        alert("Error sending OTP");
+      }
+      // Navigate to OTP screen
+      router.push({
+        pathname : "/auth/otp",
+        params : {
+          email : values.email
+        }}
+      );
+    }
   };
 
+
   return (
-    <GestureHandlerRootView>
-      <KeyboardAwareScrollView 
-        style={{flex: 1}}
-        contentContainerStyle={styles.container}
-        
-        enableOnAndroid = {true}
-        extraScrollHeight={20}
-        automaticallyAdjustContentInsets={true}
-      >
-        <View style = {styles.container}>
-          <View style = {styles.headerContainer}>
-            <Text style = {[styles.heading, {color: '#4391DA'}]}>Log</Text>
-            <Text style = {styles.heading}> in</Text>
-          </View>
-          {/* <View style = {{height: 40}}></View> */}
-          <View>
-            <Icon 
-              size={100}
-              style={{paddingBottom: 20, paddingTop: 50}}
-              name="person-outline"
-              type="ionicon" 
-              color="#4391DA" />
-          </View>
 
-
-          <Formik
-            initialValues={{ phone: "+91", password: "" }}
-            validationSchema={Yup.object({
-              phone: Yup.string()
-                .matches(/^\+91\d{10}$/, "Enter a valid Indian phone number (+91XXXXXXXXXX)")
-                .required("Phone number is required"),
-              password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-            })}
-            // TODO: HANDLE SUBMIT 
-            onSubmit={(values) => {
-              handleLogin(values);
-            }}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue}) => (
-              <View>
-                {/* Phone Number Input */}
-                
-                <InputField 
-                        label="Phone Number"
-                        iconName="phone" 
-                        placeholder="+91XXXXXXXXXX" 
-                        keyboardType="numeric"
-                        formikProps={{ handleChange, handleBlur, handleSubmit ,values, errors, touched, setFieldValue}} fieldName="phone" />
-
-                {/* Password Input */}
-                
-                <InputField 
-                        label="Password"
-                        iconName="lock" 
-                        placeholder="Password" 
-                        secureTextEntry={true} 
-                        formikProps={{ handleChange, handleBlur, handleSubmit, values, errors, touched }} fieldName="password" 
-                        trailingIconName={"eye"} 
-                        />
-
-                {/* Show/Hide Password Toggle */}
-                {/* <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                  <Text style={globalStyles.textButton}>{showPassword ? "Hide" : "Show"} Password</Text>
-                </TouchableOpacity> */}
-
-                {/* Forgot Password */}
-                <TouchableOpacity onPress={() => router.push("auth/forgotPass")}>
-                  <Text style={[globalStyles.textButton, globalStyles.textRight]}>Forgot Password?</Text>
-                </TouchableOpacity>
-                <View style={{height: 20}}></View>
-                {/* Login Button */}
-                <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
-                  <Text style={globalStyles.buttonText}>Login</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </Formik>
-
-          
-
+    <KeyboardAwareScrollView
+      style={{ flex: 1 }}
+      justifyContent="center"
+      contentContainerStyle={styles.container}
+      enableOnAndroid={true}
+      extraScrollHeight={20}
+      automaticallyAdjustContentInsets={true}
+    >
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Text style={[styles.heading, { color: UIConstants.colors.primaryBlue }]}>Log</Text>
+          <Text style={styles.heading}> in</Text>
         </View>
-        
+        {/* <View style = {{height: 40}}></View> */}
+        <View>
+          <Icon
+            size={100}
+            style={{ paddingBottom: 20, paddingTop: 50 }}
+            name="person-outline"
+            type="ionicon"
+            color={UIConstants.colors.primaryBlue} />
+        </View>
 
-       
-      </KeyboardAwareScrollView>
 
-    </GestureHandlerRootView>
-   
+        <Formik
+        //TODO : CHANGE EMAIL TO "" AFTER TESTING
+          initialValues={{ email: "" }}
+          validationSchema={Yup.object({
+            email: Yup.string()
+              .email("Enter a valid email address")
+              .required("Email is required"),
+          })}
+          onSubmit={(values) => {
+            handleLogin(values);
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue, onfocus }) => (
+            <View>
+              {/* Email Input */}
+              <InputField
+                label="Email Address"
+                iconName="mail"
+                placeholder="Enter your email"
+                keyboardType="email-address"
+                formikProps={{ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }}
+                fieldName="email"
+              />
+
+              {/* Spacer */}
+              <View style={{ height: 28 }}></View>
+
+              {/* Login Button */}
+              <TouchableOpacity style={globalStyles.button} onPress={handleSubmit}>
+                <Text style={globalStyles.buttonText}>Login</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
+
+
+        {/* Spacer */}
+        <TouchableOpacity
+          style={{ marginTop: 20 }}
+          onPress={() =>
+            router.push("/auth/signup")
+          }>
+          <Text style={globalStyles.textButton}>New to Travel Companion? Sign Up Here</Text>
+        </TouchableOpacity>
+
+      </View>
+
+
+
+    </KeyboardAwareScrollView>
+
+
+
   )
 }
 
@@ -127,9 +135,9 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     padding: 10,
   },
-  headerContainer:{
+  headerContainer: {
     flexDirection: 'row',
-    width : "100%",
+    width: "100%",
     justifyContent: "center",
     alignItems: 'Center',
   },

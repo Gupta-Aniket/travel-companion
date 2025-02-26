@@ -1,15 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import TicketModel from '../models/ticketModel'
 
-const Tickets = () => {
+const Analytics = () => {
   return (
     <View>
-      <Text>Tickets</Text>
+      <Text>Analytics</Text>
     </View>
   )
 }
 
-export default Tickets
+export default Analytics
 
 const styles = StyleSheet.create({})

@@ -1,12 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { DataItemProvider } from "../../contexts/dataItemContext";
+import { UserDataProvider } from "../contexts/userDataContext";
 
 export default function TabLayout() {
   return (
     <GestureHandlerRootView>
-      <DataItemProvider>
+      <UserDataProvider>
         <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: true }}>
           <Tabs.Screen
             name="../index" 
@@ -23,7 +23,7 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
-      </DataItemProvider>
+      </UserDataProvider>
     </GestureHandlerRootView>
   );
 }

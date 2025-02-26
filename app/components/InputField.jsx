@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import {Icon} from "react-native-elements";
+import UIConstants from '../constants/ui.jsx';
 
 const InputField = ({
   label, 
@@ -20,20 +21,29 @@ const InputField = ({
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         {/* Left-side icon */}
-        <Icon style={styles.icon} name={iconName} size={20} color="#000" />
+        <Icon 
+          style={styles.icon} 
+          name={iconName} 
+          type="ionicon"
+          size={20} 
+          color="#aaa" />
         
         {/* TextInput */}
         <TextInput
           style={styles.input}
           placeholder={placeholder}
           secureTextEntry={isSecure}
-          
+          onFocus={() => {
+            if(label === "Phone Number" && formikProps.values.phone === ""){
+              formikProps.setFieldValue("phone", "+91");
+            }
+          }}
           keyboardType={keyboardType}
           onChangeText={
             label === "Phone Number" ?
             (text) => {
               if (!text.startsWith("+91")) {
-                formikProps.setFieldValue("phone", "+91 ");
+                formikProps.setFieldValue("phone", "+91");
               } else {
                 formikProps.setFieldValue("phone", text);
               }
@@ -47,12 +57,15 @@ const InputField = ({
 
         {/* Right-side icon (Only visible if `trailingIconName` is provided) */}
         {trailingIconName && (
-          <TouchableOpacity onPress={onTrailingIconPress || (() => setIsSecure(!isSecure))}>
+          <TouchableOpacity onPress={
+            onTrailingIconPress
+          }>
             <Icon 
-              style={styles.trailingIcon} 
-              name={isSecure ? "eye-slash" : "eye"} 
+              style={styles.trailingIcon}
+              name={trailingIconName} 
+              type="ionicon"
               size={20} 
-              color="#666" 
+              color={UIConstants.colors.primaryBlue}
             />
           </TouchableOpacity>
         )}
