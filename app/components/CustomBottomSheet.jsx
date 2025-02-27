@@ -1,6 +1,6 @@
 import { Text, StyleSheet, View } from "react-native";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
-import { useDataItem } from "../../contexts/dataItemContext";
+import { useDataItem } from "../contexts/userDataContext";
 import DetailedTicket from "./DetailedTicket";
 
 const CustomBottomSheet = ({

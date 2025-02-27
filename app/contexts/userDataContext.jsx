@@ -3,32 +3,45 @@ import { useContext, useState, createContext } from "react";
 const UserDataContext = createContext(null);
 
 const DataItemProvider = ({ children }) => {
-   [item, setItem] = useState(null);
-   [isSheetVisible, setSheetVisible] = useState(false);
+  console.log("🛠️ DataItemProvider is Rendering..."); // Debug
+   const [itemIndex, setItemIndex] = useState(0);
+   const [isSheetVisible, setSheetVisible] = useState(false);
+   const [loggedInUser, setLoggedInUser] = useState(null);
+   const [data, setData] = useState([]);
 
-
-
-  const openBottomSheet = (newItem) => { 
-    setItem(newItem);
+  const openBottomSheet = (idx) => { 
+    setItemIndex(idx);
     setSheetVisible(true);
-  }
-  const closeBottomSheet = () =>{
-    setSheetVisible(false);
-    setItem(null);
-  }
+  };
 
+  const closeBottomSheet = () => {
+    setSheetVisible(false);
+    setItemIndex(-1);
+  };
+
+  const setDataWithLog = (newData) => {
+    console.log("🔍 Setting data in DataItemProvider...");
+    setData(newData);
+  };
 
   return (
-    <UserDataContext.Provider value = {{item, openBottomSheet, closeBottomSheet, isSheetVisible}}>
+    <UserDataContext.Provider value={{ 
+      itemIndex, setItemIndex, 
+      data, setData,
+      isSheetVisible, setSheetVisible,
+      loggedInUser, setLoggedInUser, 
+      openBottomSheet, 
+      closeBottomSheet, 
+      setDataWithLog,
+    }}> 
       {children}
     </UserDataContext.Provider>
-  ) ;
-
+  );
 };
 
-const useDataItem = () => {
-
-  const context = useContext(DataItemContext);
+export const useDataItem = () => {
+  const context = useContext(UserDataContext);
+  console.log("🛠️ Checking Context:", context);
   if (!context) {
     throw new Error("useDataItem must be used within a DataItemProvider"); 
   }

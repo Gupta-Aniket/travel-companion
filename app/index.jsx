@@ -1,41 +1,37 @@
-import { Redirect, router } from "expo-router";
-import { DataItemProvider, useDataItem } from "../contexts/dataItemContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Redirect } from "expo-router";
+import DataItemProvider, { useDataItem } from "./contexts/userDataContext";
 import authService from "./services/authService";
 import TicketController from "./controllers/ticketController";
-import { useRouter } from "expo-router";
-
+import { useEffect } from "react";
 
 export default function Index() {
-  
-  const router = useRouter();
-  // TODO : change this after tesing , remove isover and if(isover)
-  const isOver = false;
-  if (isOver === true) {
-    const { setData, setIndex, setLoggedInUser } = useDataItem();
-    try {
-      const currentUserId = authService.getCurrentUserId();
+  return (
+    <DataItemProvider>
+      <IndexContent />
+    </DataItemProvider>
+  );
+}
+
+function IndexContent() {
+  const { setLoggedInUser, loggedInUser, setData, data, setDataWithLog, setIndex } = useDataItem();
+  // TODO : CHANGE THIS TO USE AUTH FIRST
+  useEffect(() => {
+    const addUserTickets = async () => {
+      const currentUserId = "31357eb0-11ec-490d-9aa7-5637073cd60d"; // Simulated user ID
       if (currentUserId) {
         setLoggedInUser(currentUserId);
-        TicketController.fetchUserTickets(currentUserId).then((tickets) => {
-          setData(tickets);
-          setIndex(0);
-          console.log("Tickets fetched:", tickets);
-        });
+        const tickets = await TicketController.fetchUserTickets(currentUserId);
+        setData(tickets);
       }
-      return <DataItemProvider>
-         <Redirect href="/(tabs)/tickets" />;
-      </DataItemProvider>;
-    } catch (error) {
-      console.error("Error fetching user tickets:", error.message);
-    }
-  }
+    };
+
+    addUserTickets();
+  }, [data, setData]);
+
+
   
-    return (
-      <DataItemProvider>
-        <Redirect href="/welcome" />
-      </DataItemProvider>
-    );
+  const isLoggedin = true; // Simulated authentication check
   
+  return <Redirect href={isLoggedin ? "/(tabs)/tickets" : "/welcome"} />;
 }
 
