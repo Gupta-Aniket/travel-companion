@@ -22,6 +22,7 @@ const DataItemProvider = ({ children }) => {
   const setDataWithLog = (newData) => {
     console.log("🔍 Setting data in DataItemProvider...");
     setData(newData);
+    console.log("After setting data:", data);
   };
 
   return (

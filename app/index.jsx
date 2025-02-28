@@ -6,9 +6,9 @@ import { useEffect } from "react";
 
 export default function Index() {
   return (
-    <DataItemProvider>
+
       <IndexContent />
-    </DataItemProvider>
+
   );
 }
 
@@ -21,12 +21,12 @@ function IndexContent() {
       if (currentUserId) {
         setLoggedInUser(currentUserId);
         const tickets = await TicketController.fetchUserTickets(currentUserId);
-        setData(tickets);
+        setDataWithLog(tickets);
       }
     };
 
     addUserTickets();
-  }, [data, setData]);
+  },[]);
 
 
   

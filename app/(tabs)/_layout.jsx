@@ -7,7 +7,7 @@ export default function TabLayout() {
   return (
     <GestureHandlerRootView>
 
-        <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: true }}>
+        <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: false }}>
           <Tabs.Screen
             name="analytics"
             options={{

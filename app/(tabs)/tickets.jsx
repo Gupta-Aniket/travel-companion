@@ -1,26 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import TicketModel from '../models/ticketModel'
-import DataItemProvider,{ useDataItem  } from "../contexts/userDataContext";
-const Tickets = () => {
-  const { data } = useDataItem();
+import { useEffect, useState } from "react";
+import { useDataItem } from "../contexts/userDataContext";
+import { View, Text, SafeAreaView, Image } from "react-native";
+import TicketModel from "../models/ticketModel";
+import { FlatList } from "react-native-gesture-handler";
+import CustomCardComponent from "../components/CustomCardComponent";
+import ParallaxScrollView from "../components/Parallax";
 
-  console.log("🎟️ Data in Tickets Screen:", data); // ✅ Check what is printed
+export default function Tickets() {
+  const { data, setData, setSheetVisible, closeBottomSheet } = useDataItem();
+  console.log("🔍 Data:", data);
 
-  if (!data || data.length === 0) {
-    return <Text>No tickets available</Text>;
-  }
 
   return (
-    <View>
-      {data.map((ticket, index) => (
-        <Text key={index}>{ticket.name}</Text>
-      ))}
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      
+      <FlatList key={data.ticket_id} data={data} renderItem={({ item }) => <CustomCardComponent item={item} />} />
+        
+  </SafeAreaView>
   );
-};
-
-
-export default Tickets
-
-const styles = StyleSheet.create({})
+}
