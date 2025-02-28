@@ -12,10 +12,10 @@ export default function Tickets() {
 
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+
       
       <FlatList key={data.ticket_id} data={data} renderItem={({ item }) => <CustomCardComponent item={item} />} />
         
-  </SafeAreaView>
+
   );
 }

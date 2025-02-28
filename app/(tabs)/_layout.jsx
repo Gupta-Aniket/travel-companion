@@ -1,50 +1,77 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { SafeAreaView } from "react-native";
+import { Icon } from "react-native-elements";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 export default function TabLayout() {
   return (
     <GestureHandlerRootView>
+      <SafeAreaView style={{ flex: 1 }}>
 
-        <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: false }}>
+
+        <Tabs screenOptions={{
+          tabBarActiveTintColor: "blue",
+          headerShown: false,
+        }}>
           <Tabs.Screen
             name="analytics"
             options={{
-              title: "Settings",
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+              title: "Analytics",
+              tabBarIcon: ({ focused, color }) =>
+                <Icon name={focused ? "pie-chart" : "pie-chart-outline"}
+                  type="ionicon"
+                  size={focused ? 28 : 24}
+                  color={color} />
             }}
           />
           <Tabs.Screen
             name="explore"
             options={{
-              title: "Settings",
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+              title: "Explore",
+              tabBarIcon: ({ color, focused }) =>
+                <Icon name={focused ? "earth" : "earth-outline"}
+                  type="ionicon"
+                  size={focused ? 28 : 24}
+                  color={color} />
             }}
           />
           <Tabs.Screen
             name="tickets"
             options={{
               title: "Home",
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+              tabBarIcon: ({ color, focused }) =>
+                <Icon name={focused ? "ticket" : "ticket-outline"}
+                  type="ionicon"
+                  size={focused ? 30 : 24}
+                  color={color} />
             }}
           />
           <Tabs.Screen
             name="history"
             options={{
-              title: "Settings",
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+              title: "History",
+              tabBarIcon: ({ color, focused }) =>
+                <Icon name={focused ? "receipt" : "receipt-outline"}
+                  type="ionicon"
+                  size={focused ? 28 : 24}
+                  color={color} />
             }}
           />
           <Tabs.Screen
             name="profile"
             options={{
-              title: "Settings",
-              tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+              title: "Profile",
+              tabBarIcon: ({ color, focused }) =>
+                <Icon name={focused ? "person" : "person-outline"}
+                  type="ionicon"
+                  size={focused ? 28 : 24}
+                  color={color} />
             }}
           />
         </Tabs>
-
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 }
