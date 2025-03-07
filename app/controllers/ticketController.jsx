@@ -22,6 +22,23 @@ class TicketController {
       return null;
     }
   }
+  static async updateTicket(ticketId, ticketData){
+    try{
+      return await TicketModel.updateTicket(ticketId, ticketData);
+    }catch(error){
+      console.error("Error updating a ticket:", error.message);
+      return null;
+    }
+  }
+  static async deleteTicket(ticketId){
+    try{
+      //todo : delete the tickets from the internal memory as well
+      return await TicketModel.deleteTicket(ticketId);
+    }catch(error){
+      console.error("Error deleting a ticket:", error.message);
+      return null;
+    }
+  }
 }
 
 export default TicketController;

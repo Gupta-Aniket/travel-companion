@@ -8,7 +8,7 @@ import {
 import { useState, useEffect } from 'react';
 import React from 'react'
 
-import CustomBottomSheet from './CustomBottomSheet';
+
 import CustomCardComponent from './CustomCardComponent';
 import { color } from 'react-native-elements/dist/helpers';
 import { useDataItem } from '../contexts/userDataContext';
@@ -29,7 +29,6 @@ const ShowCardList = ({ data: data }) => {
             onPress={
               () => {
                 openBottomSheet(item);
-                
               }
             } />
           )}

@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import supabase from "../config/supabaseClient";
 
+
+
 const authService = {
 // * user already exists
   async checkUserExists(email) {
@@ -109,12 +111,16 @@ const authService = {
 
 
   async getCurrentUserId() {
-    return await AsyncStorage.getItem("userId");
+    // return await AsyncStorage.getItem("userId");
+    return "31357eb0-11ec-490d-9aa7-5637073cd60d";
   },
 
-  async logoutUser() {
-    await AsyncStorage.removeItem("userId");
-    await supabase.auth.signOut();
+  async logoutUser(router) {
+    
+    router.replace('/auth/login');
+    console.log("🔍 Logging out...");
+    // await AsyncStorage.removeItem("userId");
+    // await supabase.auth.signOut();
   }
 };
 

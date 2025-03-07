@@ -1,6 +1,6 @@
 
 /* eslint-disable react-native/no-inline-styles */
-import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -10,8 +10,15 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Icon } from 'react-native-elements';
+import  ImageSelector  from '../utils/imagePicker';
+import { router, link } from 'expo-router';
+
+import { useDataItem } from '../contexts/userDataContext';
+
+
 
 const CustomFAB = () => {
+  const { data } = useDataItem();
   const width = useSharedValue(60);
   const height = useSharedValue(60);
   const borderRadius = useSharedValue(50);
@@ -39,7 +46,7 @@ const CustomFAB = () => {
 
   const plusIcon = useAnimatedStyle(() => {
     return {
-      transform: [{rotate: `${progress.value * 45}deg`}],
+      transform: [{ rotate: `${progress.value * 45}deg` }],
     };
   });
 
@@ -52,7 +59,7 @@ const CustomFAB = () => {
   });
 
   return (
-    <View style={{flex: 1}}>
+    <View >
       <Animated.View style={[styles.container, animatedStyle]}>
         <TouchableOpacity
           style={styles.iconContainer}
@@ -61,53 +68,95 @@ const CustomFAB = () => {
             handleClose();
           }}>
           <Animated.View style={[styles.iconContainer, plusIcon]}>
-            <Icon name="add" size={30}  color="white" />
+            <Icon name="add" size={30} color="white" />
           </Animated.View>
         </TouchableOpacity>
 
-        {/* first button */}
-          <TouchableOpacity onPress={() => console.log("Pressed")}>
-            <View style={styles.contentContainer}>
-              <View style={styles.iconContainer}>
-              <Icon 
-                name="clipboard-outline" 
-                type="ionicon" 
-                color="white" 
+        {/* first button 
+        TODO : ADD IF DATA IS PASSED, THEN OPEN TICKET DETAILS FORM ADD ABILITY TO GO BACK
+        TODO : IF IT IS PASSED FROM THE TICKETS SCREEN, ALLOW USERS TO EDIT THE TICKET OUT
+        */}
+        <TouchableOpacity
+          onPress={() => {
+            try {
+              const jsonData = JSON.stringify({ hello: 'hi' });
+              console.log("Data being sent:", jsonData);
+              router.push({
+                pathname: "/intermeidate/TicketDetailsForm",
+              });
+            } catch (error) {
+              console.error("Error stringifying data:", error);
+            }
+          }}
+        >
+          <View style={styles.contentContainer}>
+            <View style={styles.iconContainer}>
+              <Icon
+                name="clipboard-outline"
+                type="ionicon"
+                color="white"
                 size={30} />
-              </View>
-              <Text style={styles.text}>Add Manually</Text>
             </View>
-          </TouchableOpacity>
+            <Text style={styles.text}>Add Manually</Text>
+          </View>
+        </TouchableOpacity>
 
-          {/* second button */}
-          <TouchableOpacity onPress={() => console.log("Pressed")}>
-            <View style={styles.contentContainer}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  name="document-outline" 
-                  type="ionicon" 
-                  color="white" 
-                  size={30} />
-              </View>
-              <Text style={styles.text}>Upload PDF</Text>
-            </View>
-          </TouchableOpacity>
+        {/* second button */}
+        <TouchableOpacity
 
-          {/* third button */}
-          <TouchableOpacity onPress={() => console.log("Pressed")}>
-            <View style={styles.contentContainer}>
-              <View style={styles.iconContainer}>
-                <Icon 
-                  name="camera-outline"
-                  type="ionicon"
-                  color="white" 
-                  size={30} />
-              </View>
-              <Text style={styles.text}>Upload Image</Text>
+          onPress={ async ()=>{
+             {
+               const imagePath = await ImageSelector.pickFromGallery();
+               console.log("Image selected:", imagePath);
+              // ! change this below to use image path
+              // if (!imagePath) {
+              //   const result = await GeminiApiService.getTicketDetailsFromImage(imagePath);
+              //   console.log("Result:", result);
+              // }
+            }
+            
+          }}
+        >
+          <View style={styles.contentContainer}>
+            <View style={styles.iconContainer}>
+              <Icon
+                name="document-outline"
+                type="ionicon"
+                color="white"
+                size={30} />
             </View>
-          </TouchableOpacity>
+            <Text style={styles.text}>Upload Image</Text>
+          </View>
+        </TouchableOpacity>
+
+        {/* third button */}
+        <TouchableOpacity 
+        onPress={ async ()=>{
+          {
+            const imagePath = await ImageSelector.pickFromCamera();
+            console.log("Image selected:", imagePath);
+           // ! change this below to use image path
+           // if (!imagePath) {
+           //   const result = await GeminiApiService.getTicketDetailsFromImage(imagePath);
+           //   console.log("Result:", result);
+           // }
+         }
+         
+       }}
+        >
+          <View style={styles.contentContainer}>
+            <View style={styles.iconContainer}>
+              <Icon
+                name="camera-outline"
+                type="ionicon"
+                color="white"
+                size={30} />
+            </View>
+            <Text style={styles.text}>Click Image</Text>
+          </View>
+        </TouchableOpacity>
       </Animated.View>
-    </View>
+    </View >
   );
 };
 

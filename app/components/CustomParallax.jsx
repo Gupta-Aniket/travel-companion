@@ -10,7 +10,7 @@ import Animated, {
 
 const HEADER_HEIGHT = 250;
 
-export default function ParallaxScrollView({
+export default function CustomParallaxScrollView({
   children,
   headerImage,
 }) {
@@ -43,7 +43,7 @@ export default function ParallaxScrollView({
             { backgroundColor: "#fff" },
             headerAnimatedStyle,
           ]}>
-          {<Image source={require("../../assets/images/parallax_header_image.jpg")} style={{ width: 300, height: 200 }}/>}
+          {<Image source={require("../../assets/images/parallax_header_image.jpg")} style={{ width: "100%", height: 200 }}/>}
         </Animated.View>
         < View style={styles.content}>{children}</ View>
       </Animated.ScrollView>
@@ -54,12 +54,14 @@ export default function ParallaxScrollView({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   header: {
     height: 200,
     overflow: 'hidden',
   },
   content: {
+    backgroundColor: 'white',
     flex: 1,
     padding: 10,
     gap: 16,

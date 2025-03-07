@@ -5,10 +5,12 @@ export const processTickets = (tickets) => {
       user_id: ticket.user_id,
       ticket_type: ticket.ticket_type,
       operator_name: ticket.operator_name,
-      from_location: ticket.from_location || "Unknown",
-      from_location_code: ticket.from_location_code || "N/A",
-      to_location: ticket.to_location || "Unknown",
-      to_location_code: ticket.to_location_code || "N/A",
+
+      from_location: ticket.from_location?.location_name || "Unknown",
+      from_location_code: ticket.from_location?.location_code || "N/A",
+      to_location: ticket.to_location?.location_name || "Unknown",
+      to_location_code: ticket.to_location?.location_code || "N/A",
+
       from_date: ticket.from_date,
       to_date: ticket.to_date,
       from_time: ticket.from_time,
@@ -16,7 +18,9 @@ export const processTickets = (tickets) => {
       travel_time: ticket.travel_time,
       time_travelled: ticket.time_travelled,
       distance: ticket.distance,
-      passenger_details: ticket.passenger_details || [],
+      passenger_details: Array.isArray(ticket.passenger_details) 
+      ? ticket.passenger_details.map(p => ({ ...p })) 
+      : [],
 
       type_specific:
         ticket.ticket_type === "train" ? ticket.train_tickets :

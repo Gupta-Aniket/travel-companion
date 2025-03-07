@@ -24,15 +24,16 @@ import authService from '../services/authService.jsx';
 const Login = () => {
   const router = useRouter();
   const handleLogin = (values) => {
-    if(authService.checkUserExists(values.email)){
+    // if(authService.checkUserExists(values.email)){
       console.log(values);
       // Send OTP
-      try{
-        authService.sendOtp(values.email);
-      }catch(error){
-        console.error("Error sending OTP:", error.message);
-        alert("Error sending OTP");
-      }
+      // TODO : enable auth after testing
+      // try{
+      //   authService.sendOtp(values.email);
+      // }catch(error){
+      //   console.error("Error sending OTP:", error.message);
+      //   alert("Error sending OTP");
+      // }
       // Navigate to OTP screen
       router.push({
         pathname : "/auth/otp",
@@ -40,7 +41,7 @@ const Login = () => {
           email : values.email
         }}
       );
-    }
+    // }
   };
 
 

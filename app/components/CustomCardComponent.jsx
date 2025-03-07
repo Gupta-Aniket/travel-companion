@@ -4,13 +4,17 @@ import { Icon } from "react-native-elements";
 import  formatDate  from "../utils/dateConvert"
 import formatTime from '../utils/fomatTime';
 import formatTimeTravelled from '../utils/formatTimeTravelled';
+import iconNameFromType from '../utils/iconNameFromType';
 
-const CustomCardComponent = ({onPress: onPress, item: item}) => {
+const CustomCardComponent = ({onPress: onPress, item: item, onLongPress: onLongPress}) => {
 
   return (
     <TouchableOpacity
     onPress={() => {
       onPress()
+    }}
+    onLongPress={() => {
+      onLongPress()
     }}
   >
     <View style={styles.card}>
@@ -26,43 +30,14 @@ const CustomCardComponent = ({onPress: onPress, item: item}) => {
       <View style={{marginTop:5, marginBottom:5}}>
         
         {/* Display icon based on ticket type */}
-        {item.ticket_type === "train" && (
-          <Icon 
-            style={styles.icon} 
-            name="train-outline"
-            type="ionicon" 
-            size={30}
-            color="#4391DA" />
-        )}
-        {item.ticket_type === "flight" && (
-          <Icon
-            style={styles.icon}
-            name="airplane-outline"
-            type="ionicon"
-            color="#4391DA"
-            size={30}
-          />
-        )}
-        {item.ticket_type === "ferry" && (
-          <Icon 
-            size={30}
-            style={styles.icon} 
-            name="boat-outline"
-            type="ionicon" 
-            color="#4391DA" />
-        )}
-        {item.ticket_type === "bus" && (
-          <Icon 
-            size={30}
-            style={styles.icon} 
-            name="bus-outline"
-            type="ionicon" 
-            color="#4391DA" />
-        )}
+        <Icon size = {30} 
+              name={iconNameFromType(item.ticket_type)}
+              color="#4391DA"
+              type="ionicon" /> 
 
         <View style={{ alignItems: "center", flexDirection: "row" }}>
           {/* <Text>{item.distance_travelled}</Text> */}
-          <Text>{formatTimeTravelled(item.travel_time)}</Text>
+          <Text>{String(formatTimeTravelled(item.travel_time))}</Text>
         </View>
       </View>
 
@@ -75,7 +50,7 @@ const CustomCardComponent = ({onPress: onPress, item: item}) => {
         <Text style={[styles.cardTextDate, { textAlign: "right" }]}>
           {item.to_date ? formatDate(item.to_date) : "N.A"}
         </Text>
-        <Text style={{ textAlign: "right" }}>{formatTime(item.to_time) ? formatTime(item.to_time) : "N.A"}</Text>
+        <Text style={{ textAlign: "right" }}>{item.to_time ? formatTime(item.to_time) : "N.A"}</Text>
       </View>
     </View>
   </TouchableOpacity>

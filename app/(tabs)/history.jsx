@@ -6,7 +6,6 @@ const History = () => {
   return (
     <View style={{ flex: 1 }}>
       <Text>History</Text>
-      <CustomFAB />
     </View>
   )
 }
