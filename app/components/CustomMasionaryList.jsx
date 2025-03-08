@@ -10,7 +10,7 @@ const CustomMasionaryList = ({ images }) => {
   const rightColumn = images.filter((_, index) => index % 2 !== 0);
 
   return (
-    <ScrollView>
+    <ScrollView style={{flex : 1}}>
       <View style={{
         flexDirection: "row", justifyContent: "space-between", padding: 5
       }}>
@@ -27,7 +27,9 @@ const CustomMasionaryList = ({ images }) => {
               rowIndex={0} />
           )}
         />
+        <View style={{padding: 5}}>
 
+        </View>
         {/* Right Column */}
         <FlatList
           scrollEnabled={false}
@@ -42,7 +44,7 @@ const CustomMasionaryList = ({ images }) => {
         />
       </View>
       <View style={{ paddingTop: 10, paddingBottom: 20 }}>
-        <Text>Finished</Text>
+        
       </View>
     </ScrollView>
   )
@@ -63,7 +65,7 @@ const CustomImage = ({ image, index, rowIndex }) => {
           style={{
             zIndex: 1,
             borderRadius: 5,
-            width: columnWidth,
+            width: "100%",
             height: (rowIndex + index) % 2 === 0 ? 300 : 150,
             marginBottom: 5,
           }}

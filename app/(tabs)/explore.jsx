@@ -1,26 +1,39 @@
-import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
-import imagesData from '../models/cityImagesDataModel'
+
 import CustomMasionaryList from '../components/CustomMasionaryList'
 import CustomCarousel from '../components/CustomCarousel'
-
+import CustomBottomSheet from '../components/CustomBottomSheet'
+import { useDataItem } from '../contexts/userDataContext';
+import { Button } from 'react-native-paper'
 const Explore = () => {
+  const { showPhotos, setShowPhotos, closeBottomSheet } = useDataItem();
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Text>Explore</Text>
-      <View
-        style={{
-          backgroundColor: "#f0f",
-          height :200,
+
+
+      <TouchableOpacity
+        onPress={() => {
+          setShowPhotos(true);
         }}
       >
+        <Text> hi </Text>
+      </TouchableOpacity>
 
-        <CustomCarousel />
-      </View>
+      {
+        showPhotos && 
+        <CustomBottomSheet
+        onClose={
+          () => {
+            closeBottomSheet
+            setShowPhotos(false)
+          }
 
-      <CustomMasionaryList  images={imagesData} />
-      
+        } />
+}
+
     </View>
   )
 }

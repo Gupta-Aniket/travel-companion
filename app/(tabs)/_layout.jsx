@@ -3,14 +3,16 @@ import { Tabs } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { Icon } from "react-native-elements";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
+import CustomBottomSheet from "../components/CustomBottomSheet";
+import { useDataItem } from "../contexts/userDataContext";
 
 export default function TabLayout() {
+  const { itemId, closeBottomSheet } = useDataItem();
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={{ flex: 1 }}>
 
-
+      
         <Tabs screenOptions={{
           tabBarActiveTintColor: "blue",
           headerShown: false,
@@ -71,6 +73,7 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
+        
       </SafeAreaView>
     </GestureHandlerRootView>
   );

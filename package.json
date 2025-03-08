@@ -74,6 +74,7 @@
     "react-native-sticky-parallax-header": "^0.0.59",
     "react-native-web": "~0.19.13",
     "react-reanimated": "^0.0.0",
+    "three-globe": "^2.42.1",
     "uuid": "^11.1.0",
     "yup": "^1.6.1"
   },

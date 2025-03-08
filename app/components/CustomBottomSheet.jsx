@@ -3,11 +3,13 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import DataItemProvider, { useDataItem } from "../contexts/userDataContext";
 import { Dimensions } from "react-native";
 import DetailedTicket from "./DetailedTicket";
+import imagesData from '../models/cityImagesDataModel'
 import { ScrollView } from "react-native-gesture-handler";
 import { Icon } from "react-native-elements";
+import CustomMasionaryList from "./CustomMasionaryList";
 
 const CustomBottomSheet = ({ }) => {
-  const { data, itemId, closeBottomSheet } = useDataItem()
+  const { showPhotos, data, itemId, closeBottomSheet } = useDataItem()
 
 
   // * better to use index instead of id -> if the data is large, it will be slow
@@ -24,7 +26,13 @@ const CustomBottomSheet = ({ }) => {
   >
     <BottomSheetView style={styles.bottomSheetContainer}>
       <View style={styles.ticketDetails}>
-          <DetailedTicket item={item} />
+        {
+          item && <DetailedTicket item={item} />
+        }
+
+        { 
+          showPhotos && item == null && <CustomMasionaryList images={imagesData} /> 
+        }
       </View>
     </BottomSheetView>
   </BottomSheet>

@@ -10,6 +10,7 @@ import CustomFAB from "../components/CustomFAB";
 import CusomBottomSheet from '../components/CustomBottomSheet';
 import React from 'react'
 import CustomParallaxScrollView from "../components/CustomParallax";
+import CustomBottomSheet from "../components/CustomBottomSheet";
 
 
 export default function Tickets() {
@@ -50,7 +51,7 @@ export default function Tickets() {
         </View>
       </CustomParallaxScrollView>
       {FABVisible && <CustomFAB />}
-      {itemId != "" && <CusomBottomSheet onClose={closeBottomSheet} />}
+      {itemId != "" && <CustomBottomSheet onClose={closeBottomSheet} />}
     </>
   );
 }

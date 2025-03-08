@@ -8,7 +8,7 @@ const DataItemProvider = ({ children }) => {
    const [isSheetVisible, setSheetVisible] = useState(false);
    const [loggedInUser, setLoggedInUser] = useState(null);
    const [data, setData] = useState([]);
-
+   const [showPhotos, setShowPhotos] = useState(false);
   const openBottomSheet = (itemId) => { 
     setItemId(itemId);
     setSheetVisible(true);
@@ -16,6 +16,7 @@ const DataItemProvider = ({ children }) => {
 
   const closeBottomSheet = () => {
     setSheetVisible(false);
+    setShowPhotos(false);
     setItemId("");
   };
 
@@ -27,6 +28,7 @@ const DataItemProvider = ({ children }) => {
 
   return (
     <UserDataContext.Provider value={{ 
+      showPhotos, setShowPhotos,
       itemId, setItemId, 
       data, setData,
       isSheetVisible, setSheetVisible,
