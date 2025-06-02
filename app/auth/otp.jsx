@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import authService from "../services/authService";
+import authService from "../../src/services/authService";
 import { router, useLocalSearchParams, useRouter } from "expo-router";
-import globalStyles from "../constants/globalstyles";
+import globalStyles from "../../src/constants/globalstyles";
 import { Divider } from "react-native-elements";
 import { useEffect } from "react";
-import { useDataItem } from "../contexts/userDataContext";
+import { useDataItem } from "../../src/contexts/userDataContext";
 const Otp = ({ route, navigation }) => {
 
   const params = useLocalSearchParams(); // Get email passed from login/signup

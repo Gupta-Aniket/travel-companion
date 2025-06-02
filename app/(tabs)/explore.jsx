@@ -1,43 +1,60 @@
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useDataItem } from '../../src/contexts/userDataContext';
+import Globe from '../../src/components/CustomGlobe';
 
-import CustomMasionaryList from '../components/CustomMasionaryList'
-import CustomCarousel from '../components/CustomCarousel'
-import CustomBottomSheet from '../components/CustomBottomSheet'
-import { useDataItem } from '../contexts/userDataContext';
-import { Button } from 'react-native-paper'
 const Explore = () => {
   const { showPhotos, setShowPhotos, closeBottomSheet } = useDataItem();
+  const [locationData, setLocationData] = useState(null);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Explore</Text>
-
-
-      <TouchableOpacity
-        onPress={() => {
-          setShowPhotos(true);
-        }}
-      >
-        <Text> hi </Text>
-      </TouchableOpacity>
-
-      {
-        showPhotos && 
-        <CustomBottomSheet
-        onClose={
-          () => {
-            closeBottomSheet
-            setShowPhotos(false)
-          }
-
-        } />
-}
-
+    <View style={{ height: '100%' }}>
+      <Globe />
     </View>
-  )
-}
 
-export default Explore
 
-const styles = StyleSheet.create({})
+  );
+};
+
+export default Explore;
+
+const styles = StyleSheet.create({
+
+
+  globeContainer: {
+    marginVertical: 10,
+    height: "90%",
+  },
+
+
+
+  button: {
+    backgroundColor: '#e74c3c',
+    padding: 15,
+    paddingTop: 40,
+    marginLeft: 5,
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: 'center',
+    width: '100%',
+  },
+  buttonText: {
+    marginTop: 10,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  cityInfo: {
+    margin: 10,
+    padding: 15,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ddd'
+  },
+  cityItem: {
+    marginVertical: 3,
+    fontSize: 14
+  },
+
+});

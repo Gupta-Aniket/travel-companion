@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CustomFAB from '../components/CustomFAB'
+
 
 const History = () => {
   return (

@@ -9,6 +9,7 @@ const DataItemProvider = ({ children }) => {
    const [loggedInUser, setLoggedInUser] = useState(null);
    const [data, setData] = useState([]);
    const [showPhotos, setShowPhotos] = useState(false);
+
   const openBottomSheet = (itemId) => { 
     setItemId(itemId);
     setSheetVisible(true);

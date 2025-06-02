@@ -14,6 +14,7 @@ import  ImageSelector  from '../utils/imagePicker';
 import { router, link } from 'expo-router';
 
 import { useDataItem } from '../contexts/userDataContext';
+// import { useDataItem } from '../../intermeidate/TicketDetailsForm';
 
 
 
@@ -82,7 +83,7 @@ const CustomFAB = () => {
               const jsonData = JSON.stringify({ hello: 'hi' });
               console.log("Data being sent:", jsonData);
               router.push({
-                pathname: "/intermeidate/TicketDetailsForm",
+                pathname: "../../intermeidate/TicketDetailsForm",
               });
             } catch (error) {
               console.error("Error stringifying data:", error);

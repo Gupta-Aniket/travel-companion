@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import authService from '../services/authService'
+import authService from '../../src/services/authService'
 import { useRouter } from 'expo-router';
 const Profile = () => {
   const router = useRouter();

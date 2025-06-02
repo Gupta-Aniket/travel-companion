@@ -1,30 +1,30 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import supabase from "../config/supabaseClient";
+import supabase from "../../app/config/supabaseClient";
 
 
 
 const authService = {
-// * user already exists
+  // * user already exists
   async checkUserExists(email) {
     const { data, error } = await supabase
-        .from('users')
-        .select('user_id')
-        .eq('email', email)
-        .single(); 
-        // Ensures only one row is returned
+      .from('users')
+      .select('user_id')
+      .eq('email', email)
+      .single();
+    // Ensures only one row is returned
 
     if (error) {
-        console.error("Error checking user:", error.message);
-        return false;
+      console.error("Error checking user:", error.message);
+      return false;
     }
 
     return data ? true : false;
   },
 
-// * common use case
+  // * common use case
   async sendOtp(email) {
     const { data, error } = await supabase.auth.signInWithOtp({
-      email, 
+      email,
       options: {
 
         shouldCreateUser: false,
@@ -37,33 +37,33 @@ const authService = {
     return data.otp;
   },
 
-// * for signup
-  async verifySignupOtp (email, otp, fullName, geminiApiKey) {
+  // * for signup
+  async verifySignupOtp(email, otp, fullName, geminiApiKey) {
     // Verify OTP
     const { data, error } = await supabase.auth.verifyOtp({
       email,
       token: otp,
       type: "email",
     });
-  
+
     if (error) {
       console.error("OTP verification failed:", error.message);
       return false;
     }
-  
+
     // Check if user exists in `users` table
     const { data: existingUser, error: userCheckError } = await supabase
       .from("users")
       .select("*")
       .eq("email", email)
       .single();
-  
+
     if (existingUser) {
       console.log("User already exists. Logging in...");
       await AsyncStorage.setItem("user_id", existingUser.user_id);
       return true;
     }
-  
+
     // Create new user if not exists
     const { user } = data;
     const { data: newUser, error: insertError } = await supabase
@@ -77,17 +77,17 @@ const authService = {
           created_at: new Date(),
         },
       ]);
-  
+
     if (insertError) {
       console.error("Error saving new user:", insertError.message);
       return false;
     }
-  
+
     await AsyncStorage.setItem("user_id", user.id);
     return true;
   },
-  
-// * for loggin in
+
+  // * for loggin in
   async verifyLoginOtp(email, otp) {
     const { data, error } = await supabase.auth.verifyOtp({
       email,
@@ -116,7 +116,7 @@ const authService = {
   },
 
   async logoutUser(router) {
-    
+
     router.replace('/auth/login');
     console.log("🔍 Logging out...");
     // await AsyncStorage.removeItem("userId");

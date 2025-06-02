@@ -16,17 +16,17 @@ import { Icon } from 'react-native-elements'
 import { Formik } from 'formik';
 import { useRouter } from 'expo-router';
 import * as Yup from 'yup';
-import globalStyles from '../constants/globalstyles.jsx';
-import InputField from '../components/InputField.jsx';
+import globalStyles from '../../src/constants/globalstyles.jsx';
+import InputField from '../../src/components/InputField.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import geminiController from '../controllers/geminiController.jsx';
-import UIConstants from '../constants/ui.jsx';
+import geminiController from '../../src/controllers/geminiController.js';
+import UIConstants from '../../src/constants/ui.js';
 
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
-  const linkToGeminiAPI = ()=>{
+  const linkToGeminiAPI = () => {
     Linking.openURL("https://aistudio.google.com/apikey");
   }
   const handleCreateAccount = (values) => {
@@ -61,7 +61,7 @@ const Signup = () => {
         </View>
         <View>
           <Icon
-            size= {80}
+            size={80}
             style={{ paddingBottom: 20, paddingTop: 20 }}
             name="person-add-outline"
             type="ionicon"
@@ -70,10 +70,11 @@ const Signup = () => {
 
 
         <Formik
-          initialValues={{ fullName: "", 
-                            email: "", 
-                            apiKey: "", 
-                            }}
+          initialValues={{
+            fullName: "",
+            email: "",
+            apiKey: "",
+          }}
           validationSchema={Yup.object({
             fullName: Yup.string().min(3, "Full Name must be at least 3 characters").required("Full Name is required"),
             email: Yup.string()
@@ -82,7 +83,7 @@ const Signup = () => {
             apiKey: Yup.string()
               .required("Gemini API Key is required")
               .test("is-valid", "Invalid API Key", async (value) => await geminiController.validateApiKey(value)),
-            
+
           })}
           onSubmit={(values) => {
             handleCreateAccount(values);
@@ -108,7 +109,7 @@ const Signup = () => {
                 formikProps={{ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }}
                 fieldName="email"
               />
-              
+
               {/* Gemini API Key */}
 
               <InputField

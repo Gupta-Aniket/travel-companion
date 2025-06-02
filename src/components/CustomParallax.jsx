@@ -43,7 +43,7 @@ export default function CustomParallaxScrollView({
             { backgroundColor: "#fff" },
             headerAnimatedStyle,
           ]}>
-          {<Image source={require("../../assets/images/parallax_header_image.jpg")} style={{ width: "100%", height: 200 }}/>}
+          {<Image source={require("../../../assets/images/parallax_header_image.jpg")} style={{ width: "100%", height: 200 }}/>}
         </Animated.View>
         < View style={styles.content}>{children}</ View>
       </Animated.ScrollView>

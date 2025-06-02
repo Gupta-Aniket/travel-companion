@@ -1,39 +1,7 @@
-import supabase from "../config/supabaseClient";
-import  {processTickets}  from "./ticketDataModel";
+import supabase from "../../config/supabaseClient";
+import { processTickets } from "./ticketDataModel";
 class TicketModel {
-
-  
-
   static async getAllTickets(userId) {
-    
-    // const tempData = [];  
-    // console.log("🔍 Fetching all tickets... -> ticket Model");
-
-    //   // TODO : uncomment this when done testing -> to avoid multiple api calls, remove temp data (upArrow)
-    //   const { data, error } = await supabase
-    //     .from("tickets")
-    //     .select(`
-    //       *,
-    //       from_location:geolocation!tickets_from_location_id_fkey(location_name, location_code),
-    //       to_location:geolocation!tickets_to_location_id_fkey(location_name, location_code),
-    //       bus_tickets(bus_number, bus_type),
-    //       train_tickets(train_number, coach_number),
-    //       ferry_tickets(ferry_name, deck_number ),
-    //       flight_tickets(flight_number, gate_number, boarding_time),
-    //       passenger_details(name, age, gender, seat_number)  
-    //     `)
-    //   .eq("user_id", userId);
-    
-
-    //   if (error) {
-    //       console.error("Error fetching user tickets:", error);
-    //       return;
-    //   }
-
-      
-    //   const formattedData = processTickets(data);
-
-    //   return formattedData;
     return [
       {
         "ticket_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -208,7 +176,7 @@ class TicketModel {
         }
       }
     ]
-;    
+      ;
   }
 
   static async createTicket(ticketData) {
@@ -228,12 +196,12 @@ class TicketModel {
   static async updateTicket(ticketId, ticketData) {
     console.log("🔍 Updating ticket... -> ticket Model");
     const { data, error } = await supabase
-        .from("tickets")
-        .update(ticketData)
-        .eq("ticket_id", ticketId);
+      .from("tickets")
+      .update(ticketData)
+      .eq("ticket_id", ticketId);
     if (error) {
-        console.error("Error updating ticket:", error);
-        return null;
+      console.error("Error updating ticket:", error);
+      return null;
     }
     return data;
   }

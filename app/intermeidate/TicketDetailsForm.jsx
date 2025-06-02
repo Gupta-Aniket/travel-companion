@@ -53,7 +53,7 @@ const CustomPickerModal = ({ visible, mode, initialValue, onCancel, onOk }) => {
   );
 };
 
-export default function TravelTicketForm() {
+export default function TicketDetailsForm() {
   // Determine if data is provided and set dynamic labels accordingly.
 
   const { passedData } = useLocalSearchParams(); // Get data from URL params
@@ -177,29 +177,20 @@ export default function TravelTicketForm() {
 
     return (
       <View style={styles.typeSpecificContainer}>
+        
+        
         <Text style={styles.sectionTitle}>
           {ticket_type.charAt(0).toUpperCase() + ticket_type.slice(1)} Details
         </Text>
-        {typeFields[ticket_type]?.map((field, index) => (
-          <View key={index} style={styles.inputContainer}>
-            <Text style={styles.label}>{field.label}</Text>
-            <TextInput
-              placeholder={field.placeholder}
-              value={values.type_specific?.[ticket_type]?.[field.key] || ''}
-              onChangeText={handleChange(`type_specific.${ticket_type}.${field.key}`)}
-              style={styles.input}
-            />
-          </View>
-        ))}
-        {/* Dropdown for ticket class (for flight, train, bus) */}
-        {['flight', 'train', 'bus'].includes(ticket_type) && (
+         {/* Dropdown for ticket class (for flight, train, bus) */}
+         {['flight', 'train', 'bus'].includes(ticket_type) && (
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Select Class</Text>
             <Dropdown
               style={styles.dropdown}
               placeholderStyle={styles.dropdownPlaceholder}
               selectedTextStyle={styles.dropdownSelectedText}
-              inputSearchStyle={styles.dropdownInputSearch}
+              inputSearchStyle={{height:0}}
               data={getClassOptions(ticket_type)}
               search
               maxHeight={300}
@@ -212,6 +203,18 @@ export default function TravelTicketForm() {
             />
           </View>
         )}
+        {typeFields[ticket_type]?.map((field, index) => (
+          <View key={index} style={styles.inputContainer}>
+            <Text style={styles.label}>{field.label}</Text>
+            <TextInput
+              placeholder={field.placeholder}
+              value={values.type_specific?.[ticket_type]?.[field.key] || ''}
+              onChangeText={handleChange(`type_specific.${ticket_type}.${field.key}`)}
+              style={styles.input}
+            />
+          </View>
+        ))}
+       
       </View>
     );
   };
@@ -225,23 +228,28 @@ export default function TravelTicketForm() {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
+      
     >
-      <ScrollView
-        contentContainerStyle={styles.scrollViewContent}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
+      <View style = {{height: 20}}> </View>
+      <View style = {{flexDirection: "row", justifyContent: "space-between"}}>
+        
           <Icon
             name="arrow-back"
             type="ionicon"
             color="black"
             size={30}
             style={{paddingTop: 20}}
-            onPress={() => router.back()}
+            onPress={() => router.replace("/tickets")} 
           />
           <Text style={styles.formTitle}>{formTitle}</Text>
           <Text>       </Text>
         </View> 
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+       
         // TODO: just to make things centered
         // ! you cannot add a fucking comment without text tag
         // ! also you cannot add a tag in comments
@@ -250,7 +258,9 @@ export default function TravelTicketForm() {
           validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log(values);
-            // Add submission logic here
+            
+            console.log("🛠️ Submitting Ticket Form...");
+
           }}
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
@@ -259,17 +269,18 @@ export default function TravelTicketForm() {
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Ticket Type</Text>
                 <Dropdown
+                  inputSearchStyle ={{height:0}}
                   style={styles.dropdown}
                   placeholderStyle={styles.dropdownPlaceholder}
-                  selectedTextStyle={styles.dropdownSelectedText}
-                  inputSearchStyle={styles.dropdownInputSearch}
+                 
+                 
                   data={TICKET_TYPES}
                   search
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
                   placeholder="Select Ticket Type"
-                  searchPlaceholder="Search..."
+                 
                   value={values.ticket_type || null}
                   onChange={item => {
                     setFieldValue('ticket_type', item.value);
@@ -524,7 +535,8 @@ export default function TravelTicketForm() {
 const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    padding: '10@s',
+    padding: '20@s',
+
   },
   scrollViewContent: {
     paddingBottom: '20@s',

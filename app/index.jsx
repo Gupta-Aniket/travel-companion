@@ -1,13 +1,13 @@
 import { Redirect } from "expo-router";
-import DataItemProvider, { useDataItem } from "./contexts/userDataContext";
-import authService from "./services/authService";
-import TicketController from "./controllers/ticketController";
+import DataItemProvider, { useDataItem } from "../src/contexts/userDataContext";
+import authService from "../src/services/authService";
+import TicketController from "../src/controllers/ticketController";
 import { useEffect } from "react";
 
 export default function Index() {
   return (
 
-      <IndexContent />
+    <IndexContent />
 
   );
 }
@@ -27,10 +27,10 @@ function IndexContent() {
     };
 
     addUserTickets();
-  },[]);
+  }, []);
 
 
-  
+
   const isLoggedin = true; // Simulated authentication check
   // return <Redirect href={isLoggedin ? "/(tabs)/tickets" : "/welcome"} />;
 

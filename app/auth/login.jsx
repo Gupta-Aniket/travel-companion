@@ -15,32 +15,33 @@ import { Icon } from 'react-native-elements'
 import { Formik } from 'formik';
 import { useRouter } from 'expo-router';
 import * as Yup from 'yup';
-import globalStyles from '../constants/globalstyles.jsx';
-import InputField from '../components/InputField.jsx';
+import globalStyles from '../../src/constants/globalstyles.jsx';
+import InputField from '../../src/components/InputField.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import   UIConstants  from '../constants/ui.jsx';
-import authService from '../services/authService.jsx';
+import UIConstants from '../../src/constants/ui.js';
+import authService from '../../src/services/authService.jsx';
 
 const Login = () => {
   const router = useRouter();
   const handleLogin = (values) => {
     // if(authService.checkUserExists(values.email)){
-      console.log(values);
-      // Send OTP
-      // TODO : enable auth after testing
-      // try{
-      //   authService.sendOtp(values.email);
-      // }catch(error){
-      //   console.error("Error sending OTP:", error.message);
-      //   alert("Error sending OTP");
-      // }
-      // Navigate to OTP screen
-      router.push({
-        pathname : "/auth/otp",
-        params : {
-          email : values.email
-        }}
-      );
+    console.log(values);
+    // Send OTP
+    // TODO : enable auth after testing
+    // try{
+    //   authService.sendOtp(values.email);
+    // }catch(error){
+    //   console.error("Error sending OTP:", error.message);
+    //   alert("Error sending OTP");
+    // }
+    // Navigate to OTP screen
+    router.push({
+      pathname: "/auth/otp",
+      params: {
+        email: values.email
+      }
+    }
+    );
     // }
   };
 
@@ -72,7 +73,7 @@ const Login = () => {
 
 
         <Formik
-        //TODO : CHANGE EMAIL TO "" AFTER TESTING
+          //TODO : CHANGE EMAIL TO "" AFTER TESTING
           initialValues={{ email: "" }}
           validationSchema={Yup.object({
             email: Yup.string()

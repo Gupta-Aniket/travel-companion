@@ -15,25 +15,24 @@ const CustomBottomSheet = ({ }) => {
   // * better to use index instead of id -> if the data is large, it will be slow
   const item = data.find(item => item.ticket_id == itemId);
   return <BottomSheet
-    snapPoints={["50%", "70%"]}
+    snapPoints={["50%", "70%", "95%"]}
     onClose={closeBottomSheet}
     animateOnMount={true}
-
     enablePanDownToClose={true}
     handleStyle={{ backgroundColor: "#aaa", borderTopLeftRadius:10, borderTopRightRadius:10, }}
 
     enableHandlePanningGesture={true}
   >
     <BottomSheetView style={styles.bottomSheetContainer}>
-      <View style={styles.ticketDetails}>
+      <ScrollView style={styles.ticketDetails}>
         {
           item && <DetailedTicket item={item} />
         }
 
         { 
-          showPhotos && item == null && <CustomMasionaryList images={imagesData} /> 
+          showPhotos  && <CustomMasionaryList images={imagesData} /> 
         }
-      </View>
+      </ScrollView>
     </BottomSheetView>
   </BottomSheet>
 

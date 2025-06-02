@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDataItem } from "../contexts/userDataContext";
+import { useDataItem } from "../../src/contexts/userDataContext";
 import { View, Text, SafeAreaView, Image } from "react-native";
-import TicketModel from "../models/ticketModel";
+import TicketModel from "../../src/models/ticketModel";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
-import CustomCardComponent from "../components/CustomCardComponent";
+import CustomCardComponent from "../../src/components/CustomCardComponent";
 
-import filterBasedOnTicketType from "../utils/filterBasedOnTicketType";
-import CustomFAB from "../components/CustomFAB";
-import CusomBottomSheet from '../components/CustomBottomSheet';
+import filterBasedOnTicketType from "../../src/utils/filterBasedOnTicketType";
+import CustomFAB from "../../src/components/CustomFAB";
+import CusomBottomSheet from '../../src/components/CustomBottomSheet';
 import React from 'react'
-import CustomParallaxScrollView from "../components/CustomParallax";
-import CustomBottomSheet from "../components/CustomBottomSheet";
+import CustomParallaxScrollView from "../../src/components/CustomParallax";
+import CustomBottomSheet from "../../src/components/CustomBottomSheet";
 
 
 export default function Tickets() {
@@ -28,30 +28,30 @@ export default function Tickets() {
               <Text>Add Tickets To See Here</Text>
             </View>
           }
-        
-            <FlatList
 
-              // onEndReached={()=> setFABVisible(false)}
-              // onScrollBeginDrag={()=> setFABVisible(true)}
-              scrollEnabled={true}
-              data={filteredData} // ✅ Use filtered data
-              keyExtractor={(item) => item.ticket_id.toString()}
-              renderItem={({ item }) =>
-                < CustomCardComponent item={item}
-                  onPress={() => {
-                    openBottomSheet(item.ticket_id);
-                  }} 
-                  onLongPress={() => console.log("Long Pressed:", item.ticket_id)
-                  }/>}
-              
-              nestedScrollEnabled={true}
-              scrollEventThrottle={16}
-            />
+          <FlatList
+
+            // onEndReached={()=> setFABVisible(false)}
+            // onScrollBeginDrag={()=> setFABVisible(true)}
+            scrollEnabled={true}
+            data={filteredData} // ✅ Use filtered data
+            keyExtractor={(item) => item.ticket_id.toString()}
+            renderItem={({ item }) =>
+              < CustomCardComponent item={item}
+                onPress={() => {
+                  openBottomSheet(item.ticket_id);
+                }}
+                onLongPress={() => console.log("Long Pressed:", item.ticket_id)
+                } />}
+
+            nestedScrollEnabled={true}
+            scrollEventThrottle={16}
+          />
 
         </View>
       </CustomParallaxScrollView>
       {FABVisible && <CustomFAB />}
-      {itemId != "" && <CustomBottomSheet onClose={closeBottomSheet} />}
+
     </>
   );
 }

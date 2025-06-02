@@ -14,27 +14,27 @@ class TicketController {
   }
 
 
-  static async addNewTicket(ticketData){
-    try{
+  static async addNewTicket(ticketData) {
+    try {
       return await TicketModel.createTicket(ticketData);
-    }catch(error){
+    } catch (error) {
       console.error("Error creating a ticket:", error.message);
       return null;
     }
   }
-  static async updateTicket(ticketId, ticketData){
-    try{
+  static async updateTicket(ticketId, ticketData) {
+    try {
       return await TicketModel.updateTicket(ticketId, ticketData);
-    }catch(error){
+    } catch (error) {
       console.error("Error updating a ticket:", error.message);
       return null;
     }
   }
-  static async deleteTicket(ticketId){
-    try{
+  static async deleteTicket(ticketId) {
+    try {
       //todo : delete the tickets from the internal memory as well
       return await TicketModel.deleteTicket(ticketId);
-    }catch(error){
+    } catch (error) {
       console.error("Error deleting a ticket:", error.message);
       return null;
     }

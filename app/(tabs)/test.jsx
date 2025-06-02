@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Button } from 'react-native-elements'
-import  GeminiApiService  from '../services/geminiApiService';
+// import  GeminiApiService  from '../src/services/geminiApiService';
 import * as FileSystem from 'expo-file-system';
 import { useRouter } from 'expo-router';
-import  ImageSelector  from '../utils/imagePicker';
-import UnsplashAPIController from '../controllers/unsplashAPIContoller';
+// import  ImageSelector  from '../utils/imagePicker';
+// import UnsplashAPIController from '../controllers/unsplashAPIContoller';
 
 const Test = () => {
 

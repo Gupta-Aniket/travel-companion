@@ -1,18 +1,19 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { Icon } from "react-native-elements";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import CustomBottomSheet from "../components/CustomBottomSheet";
-import { useDataItem } from "../contexts/userDataContext";
+import CustomBottomSheet from "../../src/components/CustomBottomSheet";
+import { useDataItem } from "../../src/contexts/userDataContext";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabLayout() {
-  const { itemId, closeBottomSheet } = useDataItem();
+  const { itemId, showPhotos, setShowPhotos, closeBottomSheet } = useDataItem();
   return (
     <GestureHandlerRootView>
       <SafeAreaView style={{ flex: 1 }}>
 
-      
+        <StatusBar style="auto" />
         <Tabs screenOptions={{
           tabBarActiveTintColor: "blue",
           headerShown: false,
@@ -73,7 +74,16 @@ export default function TabLayout() {
             }}
           />
         </Tabs>
-        
+        {
+          // ! this is a hack to make user first close the bottom sheet, to avoid my mannual work
+          // ! the bottom sheet is going inside the status bar, idk how to fix it for now
+          showPhotos &&
+          <CustomBottomSheet onClose={closeBottomSheet} />
+        }
+        {
+          itemId != "" &&
+          <CustomBottomSheet onClose={closeBottomSheet} />
+        }
       </SafeAreaView>
     </GestureHandlerRootView>
   );
