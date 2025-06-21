@@ -28,11 +28,6 @@ A full-stack **multi-modal travel ticket organizer** built with **React Native**
 - **React Native Paper & Icons**
 - **AsyncStorage** (local data persistence)
 
----
-
-## Screenshots
-
-> *(Add relevant screenshots here for better GitHub presentation)*
 
 ---
 
